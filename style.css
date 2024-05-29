@@ -250,9 +250,9 @@ nav ul li a:hover {
 
 /* #region => chart */
 
-#chart {
-  height: 370px;
+#myChart {
   width: 100%;
+  max-width: 600px;
 }
 
 /* #endregion */

@@ -41,6 +41,25 @@
     }
     }
 
+    function readPop($filename) {
+        $file = fopen($filename, "r") or die("Unable to open file!");
+        $animalPop = array();
+
+        while (!feof($file)) {
+            $line = fgets($file);
+            $line = trim($line);
+            if (!empty($line)) {
+                list($label, $value) = explode(": ", $line);
+                if ($label == "Favorite Animal") {
+                $animalCounts[$value] = isset($animalCounts[$value]) ? $animalCounts[$value] + 1 : 1;
+                }
+            }
+        }
+
+        fclose($file);
+        return $animalPop;
+    }
+
     $action = isset($_GET['action']) ? $_GET['action'] : '';
 
     switch ($action) {
@@ -50,6 +69,10 @@
 
     case 'saveFormData':
         saveFormData();
+        break;
+    
+    case 'readPop':
+        readPop();
         break;
 
     default:

@@ -1,3 +1,5 @@
+import { Chart } from 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js';
+
 function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -5,6 +7,7 @@ function shuffle(arr) {
     }
     return arr;
 }
+
 let funFactsIndex = 0;
 let funFacts = shuffle([
     {
@@ -85,31 +88,43 @@ function generateFunFact() {
 }
 document.getElementById("Fact_button").addEventListener("click", generateFunFact);
 
-window.onload = function () {
-    if (window.location.pathname.endsWith('data.php')) {
-        fetch('action.php?action=getDataPoints')
-        .then(response => response.json())
-        .then(dataPoints => {
-            if (dataPoints.error) {
-                console.error(dataPoints.error);
-                return;
+function fetchData() {
+    // Make an AJAX request to the PHP script
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                // Parse the JSON response
+                var data = JSON.parse(xhr.responseText);
+                // Call function to draw chart with the data
+                drawChart(data);
+            } 
+            else {
+                console.error('Error fetching data:', xhr.status);
             }
-            var chart = new CanvasJS.Chart("chart", {
-                animationEnabled: true,
-                theme: "light2",
-                title: {
-                    text: "Gold Reserves"
-                },
-                axisY: {
-                    title: "Gold Reserves (in tonnes)"
-                },
-                data: [{
-                    type: "column",
-                    yValueFormatString: "#,##0.## tonnes",
-                    dataPoints: dataPoints
-                }]
-            });
-            chart.render();
-        });
-    }
-};
+        }
+    };
+    xhr.open('GET', 'get_animal_popularity.php', true);
+    xhr.send();
+}
+
+function drawChart() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: xValues,
+          datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+          }]
+        },
+        options: {
+          legend: {display: false},
+          title: {
+            display: true,
+            text: "World Wine Production 2018"
+          }
+        }
+      });
+}

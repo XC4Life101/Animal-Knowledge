@@ -7,7 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
         <script src="main.js" defer></script>
-        <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
     </head>
     <body>
         <header>
@@ -22,7 +21,7 @@
             </nav>
         </header>
 
-        <div id="chart"></div>
+        <canvas id="myChart"></canvas>
 
         <footer>
             <p>&copy; 2024 Animal Knowledge; Created by Liam Zadoorian</p>
