@@ -87,7 +87,7 @@ document.getElementById("Fact_button").addEventListener("click", generateFunFact
 
 window.onload = function () {
     if (window.location.pathname.endsWith('data.php')) {
-        fetch('actions.php?action=getDataPoints')
+        fetch('action.php?action=getDataPoints')
         .then(response => response.json())
         .then(dataPoints => {
             if (dataPoints.error) {

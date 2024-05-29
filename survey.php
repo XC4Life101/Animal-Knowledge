@@ -21,7 +21,7 @@
             </nav>
         </header>
 
-        <form action="actions.php?action=saveFormData" method="POST">
+        <form action="action.php?action=saveFormData" method="POST">
             <section class="form" id="Page1">
                 <u><h1>Personal Info</h1></u>
 
