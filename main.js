@@ -1,5 +1,3 @@
-import { Chart } from 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js';
-
 function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -86,45 +84,34 @@ function generateFunFact() {
     funFactsIndex++;
     document.getElementById("Fact_button").removeEventListener("click", generateFunFact);
 }
-document.getElementById("Fact_button").addEventListener("click", generateFunFact);
-
-function fetchData() {
-    // Make an AJAX request to the PHP script
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                // Parse the JSON response
-                var data = JSON.parse(xhr.responseText);
-                // Call function to draw chart with the data
-                drawChart(data);
-            } 
-            else {
-                console.error('Error fetching data:', xhr.status);
-            }
-        }
-    };
-    xhr.open('GET', 'get_animal_popularity.php', true);
-    xhr.send();
-}
 
 function drawChart() {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: "bar",
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
         data: {
-          labels: xValues,
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [{
-            backgroundColor: barColors,
-            data: yValues
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
           }]
         },
         options: {
-          legend: {display: false},
-          title: {
-            display: true,
-            text: "World Wine Production 2018"
+          scales: {
+            y: {
+              beginAtZero: true
+            }
           }
         }
-      });
+    });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.pathname === '/data.php') {
+      drawChart(); 
+    }
+  });
+  
+document.getElementById("Fact_button").addEventListener("click", generateFunFact);
