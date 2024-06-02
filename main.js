@@ -68,6 +68,82 @@ function show(shown, hidden) {
   return false;
 }
 
+function generateBarChart(categories, values) {
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: categories,
+            datasets: [{
+                label: 'Favorite Animals',
+                data: values,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Custom background color
+                borderColor: 'rgba(54, 162, 235, 1)', // Custom border color
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Favorite Animals',
+                    font: {
+                        family: 'Arial',
+                        size: 16,
+                        weight: 'bold',
+                        color: 'black'
+                    }
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        font: {
+                            family: 'Arial',
+                            size: 14,
+                            weight: 'normal',
+                            color: 'black'
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false // Disable x-axis grid lines
+                    },
+                    ticks: {
+                        font: {
+                            family: 'Arial',
+                            size: 12,
+                            weight: 'normal',
+                            color: 'black'
+                        }
+                    }
+                },
+                y: {
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)', // Custom grid line color
+                        lineWidth: 1 // Custom grid line width
+                    },
+                    ticks: {
+                        font: {
+                            family: 'Arial',
+                            size: 12,
+                            weight: 'normal',
+                            color: 'black'
+                        }
+                    }
+                }
+            },
+            animation: {
+                duration: 1500, // Animation duration in milliseconds
+                easing: 'easeInOutQuart' // Animation easing function
+            }
+        }
+    });
+}
+
 function generateFunFact() {
     if (funFactsIndex >= funFacts.length) {
         document.getElementById("fun-fact-text").textContent = "You've seen them all";
@@ -85,33 +161,4 @@ function generateFunFact() {
     document.getElementById("Fact_button").removeEventListener("click", generateFunFact);
 }
 
-function drawChart() {
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-    });
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.pathname === '/data.php') {
-      drawChart(); 
-    }
-  });
-  
 document.getElementById("Fact_button").addEventListener("click", generateFunFact);

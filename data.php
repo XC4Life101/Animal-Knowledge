@@ -1,3 +1,11 @@
+<?php
+    include 'action.php';
+    $data = readData('data.txt');
+    // Prepare data for Chart.js
+    $categories = json_encode(array_keys($data));
+    $values = json_encode(array_values($data));
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="main.js" defer></script>
+        <script src="main.js"></script>
     </head>
     <body>
         <header>
@@ -22,9 +30,16 @@
             </nav>
         </header>
 
-        <div style="height: 370px; width: 100%;">
-            <canvas id="myChart"></canvas>
+        <div>
+            <canvas id="myChart" ></canvas>
         </div>
+        
+        <script>
+            // Call the function to generate the bar chart with data from PHP
+            const categories = <?php echo $categories; ?>;
+            const values = <?php echo $values; ?>;
+            generateBarChart(categories, values);
+        </script>
 
         <footer>
             <p>&copy; 2024 Animal Knowledge; Created by Liam Zadoorian</p>
